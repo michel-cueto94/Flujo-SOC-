@@ -32,8 +32,8 @@ Laboratorio de ciberseguridad enfocado en la implementación de un entorno SIEM 
 
 ### 3. Respuesta Activa (SOAR)
 * Configuración del motor de **Active Response** en el Manager (`ossec.conf`) para ejecutar scripts automáticos de mitigación (`netsh`) ante eventos de severidad alta.
-* Activación del módulo de ejecución remota (`wazuh-execd`) en la máquina víctima.
-“Validación del ciclo: Detección -> Disparo de Regla -> Envío de la orden al Agente (la mitigación requiere ajuste, ver nota)
+- Activación del módulo de ejecución remota (`wazuh-execd`) en la máquina víctima.
+- Validación del ciclo: Detección -> Disparo de Regla -> Envío de la orden al Agente (la mitigación requiere ajuste, ver nota).
  
 <img width="969" height="133" alt="Captura de pantalla 2026-10-12 125119" src="https://github.com/user-attachments/assets/fb538135-01e5-44e5-a713-2f6694fe06ca" />
 
