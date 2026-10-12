@@ -1,12 +1,12 @@
 Laboratorio de ciberseguridad enfocado en la implementación de un entorno SIEM con **Wazuh v4.9.0**, ingesta de telemetría avanzada de Windows mediante **Sysmon** y respuesta automatizada ante amenazas (*Active Response*).
 
-## 📐 Arquitectura del Entorno
+##  Arquitectura del Entorno
 
 * **Manager / Indexer / Dashboard**: Wazuh 4.9.0 desplegado en contenedores Docker sobre **Kali Linux**.
 * **Agente Monitoreado**: **Windows Server 2022** con **Sysmon** (Event ID 1 habilitado).
 * **Red**: Red Interna aislada en VirtualBox (`10.0.2.0/24`).
 
-## 🚀 Implementación y Configuración
+##  Implementación y Configuración
 
 ### 1. Conectividad y Telemetría
 * Asignación de IP estática en Kali (`10.0.2.15/24`) e interconexión con Windows Server (`10.0.2.6/24`).
@@ -38,7 +38,7 @@ Laboratorio de ciberseguridad enfocado en la implementación de un entorno SIEM 
 <img width="967" height="572" alt="Captura de pantalla 2026-10-12 124325" src="https://github.com/user-attachments/assets/5a5c6433-6ce2-4a24-9ade-121c50be7581" />
 
 
-## 📊 Verificación
+## Verificación
 
 El flujo fue validado confirmando el registro de ejecución en el agente:
 `C:\Program Files (x86)\ossec-agent\active-response\active-responses.log`
