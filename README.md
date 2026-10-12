@@ -33,12 +33,32 @@ Laboratorio de ciberseguridad enfocado en la implementación de un entorno SIEM 
 ### 3. Respuesta Activa (SOAR)
 * Configuración del motor de **Active Response** en el Manager (`ossec.conf`) para ejecutar scripts automáticos de mitigación (`netsh`) ante eventos de severidad alta.
 * Activación del módulo de ejecución remota (`wazuh-execd`) en la máquina víctima.
-* Validación del ciclo completo: **Detección -> Disparo de Regla -> Ejecución Automática en Agente**.
+“Validación del ciclo: Detección -> Disparo de Regla -> Envío de la orden al Agente (la mitigación requiere ajuste, ver nota)
  
-<img width="967" height="572" alt="Captura de pantalla 2026-10-12 124325" src="https://github.com/user-attachments/assets/5a5c6433-6ce2-4a24-9ade-121c50be7581" />
+<img width="969" height="133" alt="Captura de pantalla 2026-10-12 125119" src="https://github.com/user-attachments/assets/fb538135-01e5-44e5-a713-2f6694fe06ca" />
+
+> **Nota sobre el resultado del Active Response**
+>
+> El disparo de la respuesta activa funcionó: el Manager envió la alerta de la
+> regla `92057` al agente y `wazuh-execd` invocó el script `netsh`, como se ve en
+> `active-responses.log`. Sin embargo, la **mitigación no se completó**, ya que el
+> script registró el error `Cannot read 'srcip' from data`.
+>
+> **Causa:** el script `netsh` de Wazuh está diseñado para bloquear una dirección
+> IP de origen (`srcip`). La alerta de PowerShell codificado es un evento local de
+> creación de proceso (Sysmon Event ID 1) y no incluye ese campo, por lo que el
+> script no tiene un objetivo que bloquear.
+>
+> **Conclusión:** la cadena Detección → Disparo de regla → Envío al agente quedó
+> validada; la ejecución efectiva de la mitigación requiere un script adaptado al
+> tipo de evento.
+>
+> **Mejora propuesta:** usar `netsh` con eventos que sí contengan IP de origen
+> (por ejemplo, fuerza bruta por RDP), o desarrollar un script propio que actúe
+> sobre el proceso (`data.win.eventdata.processId`) o aísle el host.
 
 
 ## Verificación
 
-El flujo fue validado confirmando el registro de ejecución en el agente:
+Se confirmó el disparo de la respuesta activa en active-responses.log (ver nota sobre la limitación).
 `C:\Program Files (x86)\ossec-agent\active-response\active-responses.log`
